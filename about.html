@@ -7,26 +7,34 @@
 
     <title>Gift Bloom | About Us</title>
 
-    <link rel="icon" type="image/jpg" href="Gift bloom-favicon.jpg">
+    <link rel="icon" type="image/jpeg" href="Gift bloom-favicon.jpg">
 
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <style>
-
         body {
-            transition: background-color 0.3s ease, color 0.3s ease;
+            transition: background-color 0.4s ease, color 0.4s ease;
+            background-color: #eaf4fb;
+            color: #27313f;
         }
 
         /* DARK MODE */
-
         body.dark-mode {
             background-color: #0d1526;
             color: #f1f5f9;
         }
 
+        header {
+            background: rgba(28, 42, 74, .90) !important;
+            transition: background-color .5s;
+        }
+
         body.dark-mode header {
-            background-color: rgba(15, 23, 42, 0.85);
-            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(8, 15, 30, .95) !important;
+        }
+
+        body.dark-mode .about-hero {
+            background-color: transparent;
         }
 
         body.dark-mode .about-content {
@@ -61,537 +69,465 @@
             background-color: #1e293b;
         }
 
-        body.dark-mode .cart-panel {
-            background-color: #1e293b;
-            color: white;
+        body.dark-mode #shoppingCart {
+            background: #1c2a4a;
+            color: #e5eaf5;
         }
 
-        body.dark-mode .cart-panel h2,
-        body.dark-mode .cart-panel button:not(.checkout-button):not(.contact-button) {
-            color: white;
-        }
-
-        body.dark-mode .cart-panel .border-b,
-        body.dark-mode .cart-panel .border-t {
-            border-color: #475569;
+        body.dark-mode #shoppingCart h2 {
+            color: #ffffff;
         }
 
         /* THEME TOGGLE */
-
-        .tgl-02 {
-            display: none;
-        }
-
         .tgl-02,
-        .tgl-02:after,
-        .tgl-02:before,
         .tgl-02 *,
-        .tgl-02 *:after,
-        .tgl-02 *:before,
-        .tgl-02 + .tgl-btn {
+        .tgl-02 *::before,
+        .tgl-02 *::after {
             box-sizing: border-box;
         }
 
-        .tgl-02 + .tgl-btn {
-            outline: 0;
-            display: block;
-            width: 65px;
-            height: 34px;
-            position: relative;
-            cursor: pointer;
-            user-select: none;
-            background: #87CEEB;
-            border-radius: 50px;
-            transition: all 0.4s ease;
+        .tgl-02 {
+            --day: #7ecbf5;
+            --night: #1c2a4a;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        .tgl-02 + .tgl-btn:after {
+        .tgl-02__row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .tgl-02__lbl {
+            font-size: 13px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .tgl-02__scene {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tgl-02__sw {
+            appearance: none;
+            -webkit-appearance: none;
+            display: block;
+            width: 70px;
+            height: 36px;
+            border-radius: 20px;
+            background: linear-gradient(var(--day), #b3e0f9);
+            position: relative;
+            cursor: pointer;
+            transition: background .45s;
+            box-shadow: inset 0 2px 5px rgba(0,40,80,.25);
+        }
+
+        .tgl-02__sw:checked {
+            background: linear-gradient(var(--night), #0f1830);
+        }
+
+        .tgl-02__sw::before {
             content: "";
             position: absolute;
-            top: 3px;
-            left: 3px;
+            top: 4px;
+            left: 4px;
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: #FFD700;
-            transition: all 0.4s ease;
+            background: transparent;
+            box-shadow:
+                inset 0 0 0 14px #ffd54f,
+                0 0 12px rgba(255,200,60,.8);
+            transition:
+                transform .45s cubic-bezier(.3,1.2,.4,1),
+                box-shadow .45s;
+            z-index: 1;
         }
 
-        .tgl-02:checked + .tgl-btn {
-            background: #1e293b;
+        .tgl-02__sw:checked::before {
+            transform: translateX(34px);
+            box-shadow:
+                inset -8px -4px 0 1px #f4f1de,
+                0 0 10px rgba(220,225,255,.45);
         }
 
-        .tgl-02:checked + .tgl-btn:after {
-            left: 34px;
-            background: #f8fafc;
+        .tgl-02__stars {
+            position: absolute;
+            top: 9px;
+            left: 12px;
+            width: 2px;
+            height: 2px;
+            border-radius: 50%;
+            background: #fff;
+            box-shadow:
+                10px 4px 0 #fff,
+                4px 14px 0 0 #dfe8ff,
+                16px 16px 0 #fff,
+                24px 7px 0 0 #dfe8ff;
+            opacity: 0;
+            transition: opacity .45s;
+            pointer-events: none;
         }
 
+        .tgl-02__sw:checked ~ .tgl-02__stars {
+            opacity: .95;
+        }
+
+        .tgl-02__cloud {
+            position: absolute;
+            top: 19px;
+            right: 12px;
+            width: 18px;
+            height: 7px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow:
+                -7px -4px 0 -1px #fff,
+                6px -3px 0 -2px #fff;
+            opacity: .95;
+            transition: opacity .45s, transform .45s;
+            pointer-events: none;
+        }
+
+        .tgl-02__sw:checked ~ .tgl-02__cloud {
+            opacity: 0;
+            transform: translateX(8px);
+        }
+
+        .tgl-02__sw:focus-visible {
+            outline: 3px solid #4d9fff;
+            outline-offset: 3px;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .tgl-02 *,
+            body,
+            header {
+                transition: none !important;
+            }
+        }
     </style>
-
 </head>
 
-<body class="bg-pink-50 relative min-h-full overflow-x-hidden w-full bg-fixed bg-cover bg-center bg-no-repeat">
+<body class="m-0 overflow-x-hidden">
 
-    <!-- Navbar -->
-
+    <!-- NAVBAR -->
     <header class="sticky top-0 z-20 border-b border-white/20 bg-white/20 backdrop-blur-lg">
-
         <nav class="relative mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
 
             <!-- Logo -->
-
             <div class="flex items-center gap-2">
-
                 <img src="Gift bloom-favicon.jpg"
-                    class="h-12 w-12 object-contain"
+                    class="h-12 w-12 rounded-full object-cover shadow-sm"
                     alt="Gift Bloom Logo">
-
-                <a href="index.html" class="text-xl font-semibold text-white">
+                <a href="index.html" class="text-xl font-bold tracking-tight text-white hover:text-pink-200 transition">
                     Gift Bloom
                 </a>
-
             </div>
 
             <!-- Desktop Menu -->
-
             <ul class="hidden items-center gap-2 md:flex">
-
                 <li>
                     <a href="index.html"
-                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-0 after:bg-white after:transition-all hover:after:w-[calc(100%-24px)]">
+                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition hover:text-pink-200 hover:underline">
                         Home
                     </a>
                 </li>
 
                 <li>
                     <a href="product.html"
-                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-0 after:bg-white after:transition-all hover:after:w-[calc(100%-24px)]">
+                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition hover:text-pink-200 hover:underline">
                         Products
                     </a>
                 </li>
 
                 <li>
-                    <a href="About.html"
-                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-0 after:bg-white after:transition-all hover:after:w-[calc(100%-24px)]">
+                    <a href="about.html"
+                        class="relative flex h-11 items-center px-3 text-sm font-semibold text-pink-300 underline underline-offset-4">
                         About
                     </a>
                 </li>
 
                 <li>
-                    <a href=""
-                        onclick="window.open('https://wa.me/923227079455', '_blank')"
-                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-0 after:bg-white after:transition-all hover:after:w-[calc(100%-24px)]">
-                        Contact
-                    </a>
-                </li>
-
-                <li>
-                    <a href="reveiws.html"
-                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition after:absolute after:bottom-1 after:left-3 after:h-0.5 after:w-0 after:bg-white after:transition-all hover:after:w-[calc(100%-24px)]">
+                    <a href="reviews.html"
+                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition hover:text-pink-200 hover:underline">
                         Reviews
                     </a>
                 </li>
 
+                <li>
+                    <a href="https://wa.me/923227079455"
+                        target="_blank"
+                        class="relative flex h-11 items-center px-3 text-sm font-medium text-white transition hover:text-pink-200 hover:underline">
+                        Contact
+                    </a>
+                </li>
             </ul>
 
-            <!-- Right Side -->
+            <!-- Mobile Menu -->
+            <details class="group relative md:hidden">
+                <summary class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-white/50 text-white [&::-webkit-details-marker]:hidden">
+                    <svg class="h-6 w-6 group-open:hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M4 7h16M4 12h16M4 17h16"/>
+                    </svg>
+                    <svg class="hidden h-6 w-6 group-open:block" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M6 6l12 12M18 6L6 18"/>
+                    </svg>
+                </summary>
 
+                <ul class="absolute right-0 top-14 grid w-48 gap-1 rounded-xl border border-white/30 bg-black/90 p-3 text-white shadow-xl backdrop-blur-lg z-30">
+                    <li><a href="index.html" class="block rounded-lg px-3 py-2 hover:bg-white/20">Home</a></li>
+                    <li><a href="product.html" class="block rounded-lg px-3 py-2 hover:bg-white/20">Products</a></li>
+                    <li><a href="about.html" class="block rounded-lg px-3 py-2 font-semibold text-pink-300 hover:bg-white/20">About</a></li>
+                    <li><a href="reviews.html" class="block rounded-lg px-3 py-2 hover:bg-white/20">Reviews</a></li>
+                    <li><a href="https://wa.me/923227079455" target="_blank" class="block rounded-lg px-3 py-2 hover:bg-white/20">Contact</a></li>
+                </ul>
+            </details>
+
+            <!-- Right Side Controls -->
             <div class="flex items-center gap-3">
-
-                <!-- Dark / Light Toggle -->
-
-                <div class="flex items-center">
-
-                    <input class="tgl-02" id="themeToggle" type="checkbox">
-
-                    <label class="tgl-btn" for="themeToggle"
-                        aria-label="Toggle dark and light mode"></label>
-
+                <div class="tgl-02">
+                    <label class="tgl-02__row" for="tgl-02-sw">
+                        <span class="tgl-02__scene">
+                            <input type="checkbox"
+                                id="tgl-02-sw"
+                                class="tgl-02__sw"
+                                role="switch"
+                                aria-label="Toggle dark mode">
+                            <span class="tgl-02__stars" aria-hidden="true"></span>
+                            <span class="tgl-02__cloud" aria-hidden="true"></span>
+                        </span>
+                    </label>
                 </div>
 
-                <!-- Mobile Menu -->
-
-                <details class="group relative md:hidden">
-
-                    <summary
-                        class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-lg border border-white/50 text-white [&::-webkit-details-marker]:hidden">
-
-                        <svg class="h-6 w-6 group-open:hidden"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2">
-
-                            <path d="M4 7h16M4 12h16M4 17h16"/>
-
-                        </svg>
-
-                        <svg class="hidden h-6 w-6 group-open:block"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2">
-
-                            <path d="M6 6l12 12M18 6L6 18"/>
-
-                        </svg>
-
-                    </summary>
-
-                    <ul
-                        class="absolute right-0 top-14 grid w-48 gap-1 rounded-xl border border-white/30 bg-black/80 p-3 text-white shadow-xl backdrop-blur-lg">
-
-                        <li>
-                            <a href="index.html"
-                                class="block rounded-lg px-3 py-2 hover:bg-white/20">
-                                Home
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="product.html"
-                                class="block rounded-lg px-3 py-2 hover:bg-white/20">
-                                Products
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="reveiws.html"
-                                class="block rounded-lg px-3 py-2 hover:bg-white/20">
-                                Reviews
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href=""
-                                onclick="window.open('https://wa.me/923227079455', '_blank')"
-                                class="block rounded-lg px-3 py-2 hover:bg-white/20">
-                                Contact
-                            </a>
-                        </li>
-
-                        <li>
-                            <a href="About.html"
-                                class="block rounded-lg px-3 py-2 hover:bg-white/20">
-                                About
-                            </a>
-                        </li>
-
-                    </ul>
-
-                </details>
-
                 <!-- Cart Button -->
-
                 <button onclick="openCart()"
-                    class="relative flex h-11 items-center gap-2 rounded-lg border border-white/40 px-3 text-white transition hover:bg-white/20">
-
+                    class="relative flex h-11 items-center gap-2 rounded-lg border border-white/40 px-3 text-white transition hover:bg-white/20"
+                    aria-label="Open Cart">
                     <svg xmlns="http://www.w3.org/2000/svg"
                         class="h-6 w-6"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
                         stroke-width="1.8">
-
                         <path stroke-linecap="round"
                             stroke-linejoin="round"
                             d="M3 3h2l2.4 12.4a2 2 0 002 1.6h8.8a2 2 0 002-1.6L22 7H6"/>
-
                         <circle cx="10" cy="21" r="1"/>
                         <circle cx="19" cy="21" r="1"/>
-
                     </svg>
 
-                    <span class="hidden sm:inline">Cart</span>
+                    <span class="hidden sm:inline font-medium">Cart</span>
 
                     <span id="cartCount"
-                        class="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-pink-600 px-1 text-xs text-white">
+                        class="absolute -right-2 -top-2 grid h-5 min-w-5 place-items-center rounded-full bg-pink-600 px-1 text-xs font-bold text-white shadow">
                         0
                     </span>
-
                 </button>
-
             </div>
-
         </nav>
-
     </header>
 
     <!-- About Hero Section -->
-
-    <section class="about-hero min-h-[480px] flex items-center justify-center text-center px-5">
-
-        <div class="max-w-3xl text-white">
-
-            <p class="uppercase tracking-[5px] text-sm mb-5 text-white">
+    <section class="relative bg-gradient-to-b from-slate-900 to-slate-800 text-white py-24 px-5 text-center">
+        <div class="max-w-3xl mx-auto">
+            <p class="uppercase tracking-[5px] text-xs font-bold mb-4 text-pink-400">
                 Welcome to Gift Bloom
             </p>
-
-            <h1 class="heading-font text-white text-5xl md:text-7xl font-bold mb-6">
-                About Us
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6 tracking-tight">
+                Crafting Joy, One Gift at a Time
             </h1>
-
-            <p class="text-base md:text-lg leading-8 text-white">
-                Making Every Moment Special, One Gift at a Time.
+            <p class="text-base md:text-lg text-slate-300 leading-relaxed max-w-2xl mx-auto">
+                Making every moment extraordinary through handcrafted luxury hampers, fresh floral bouquets, customized explosion boxes, and thoughtful surprises.
             </p>
-
         </div>
-
     </section>
 
     <!-- About Content -->
-
     <section class="about-content py-20 px-6 md:px-16">
-
         <div class="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
-
             <div>
-
-                <p class="text-pink-600 uppercase tracking-widest text-sm font-semibold mb-3">
+                <p class="text-pink-600 uppercase tracking-widest text-sm font-bold mb-3">
                     Who We Are
                 </p>
 
-                <h2 class="heading-font text-4xl md:text-5xl text-white mb-6">
+                <h2 class="text-3xl md:text-4xl font-extrabold mb-6 tracking-tight">
                     A Little Box Full of Happiness
                 </h2>
 
-                <p class="text-white leading-8 mb-5">
-                    Welcome to Gift Bloom, where every gift tells a story
-                    and every little detail is filled with love.
+                <p class="leading-relaxed mb-4 text-gray-700 dark:text-gray-300">
+                    Welcome to <b>Gift Bloom</b>, where every gift tells a heartfelt story and every little detail is filled with warmth and care.
                 </p>
 
-                <p class="text-white leading-8 mb-5">
-                    We believe that gifts are more than just beautiful
-                    things. They are a way to express feelings, create
-                    memories and make our loved ones feel special.
+                <p class="leading-relaxed mb-4 text-gray-700 dark:text-gray-300">
+                    We believe gifts are much more than just objects — they are gestures of affection, bridges between hearts, and timeless memories for your loved ones.
                 </p>
 
-                <p class="text-white leading-8">
-                    From beautiful flowers to delightful gift boxes and
-                    sweet surprises, we bring you thoughtful gifts for
-                    every occasion.
+                <p class="leading-relaxed mb-6 text-gray-700 dark:text-gray-300">
+                    From bespoke floral arrangements to delicious gourmet chocolate hampers and custom explosion boxes, we cater to birthdays, weddings, anniversaries, and Eid celebrations across Pakistan.
                 </p>
 
                 <a href="product.html"
-                    class="inline-block mt-8 bg-pink-600 text-white px-8 py-3 rounded-full hover:bg-pink-700 transition">
-                    Explore Our Gifts
+                    class="inline-block bg-pink-600 text-white font-semibold px-8 py-3.5 rounded-xl shadow-md hover:bg-pink-700 transition">
+                    Explore Our Gifts Collection →
                 </a>
-
             </div>
 
-            <div class="image-container bg-white p-4 rounded-3xl shadow-lg">
-
+            <div class="image-container bg-white dark:bg-slate-800 p-4 rounded-3xl shadow-xl border border-gray-100 dark:border-slate-700">
                 <img src="bg.png"
-                    alt="Beautiful pink flower"
-                    class="w-full h-[420px] object-cover rounded-2xl">
-
+                    alt="Gift Bloom Floral Art"
+                    class="w-full h-[400px] object-cover rounded-2xl"
+                    onerror="this.src='Gift bloom-favicon.jpg'">
             </div>
-
         </div>
-
     </section>
 
     <!-- Our Mission -->
-
-    <section class="mission-section py-20 px-6">
-
+    <section class="mission-section py-20 px-6 bg-white/40 dark:bg-slate-900/40 border-y border-gray-200 dark:border-slate-800">
         <div class="max-w-6xl mx-auto text-center">
-
-            <p class="text-pink-600 uppercase tracking-widest text-sm font-semibold mb-3">
-                What We Believe
+            <p class="text-pink-600 uppercase tracking-widest text-sm font-bold mb-3">
+                Our Values
             </p>
 
-            <h2 class="mission-heading heading-font text-4xl md:text-5xl text-gray-800 mb-6">
-                Our Mission
+            <h2 class="mission-heading text-3xl md:text-4xl font-extrabold mb-5">
+                Our Mission & Promise
             </h2>
 
-            <p class="mission-description text-gray-600 leading-8 max-w-3xl mx-auto">
-                Our mission is to make gifting simple, beautiful and
-                memorable. We want every customer to find something
-                special that brings happiness to someone they love.
+            <p class="mission-description text-gray-600 dark:text-gray-300 leading-relaxed max-w-2xl mx-auto">
+                To make gifting simple, breathtaking, and memorable. We ensure that every hamper leaves our studio looking picture-perfect and ready to delight.
             </p>
 
-            <div class="grid md:grid-cols-3 gap-8 mt-14">
-
-                <div class="mission-card bg-pink-50 p-8 rounded-2xl">
-
+            <div class="grid md:grid-cols-3 gap-8 mt-12">
+                <div class="mission-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
                     <div class="text-4xl mb-4">🌸</div>
-
-                    <h3 class="heading-font text-2xl text-gray-800 mb-3">
-                        Beautiful Gifts
-                    </h3>
-
-                    <p class="text-gray-600 leading-7">
-                        Thoughtfully selected gifts for every special moment.
+                    <h3 class="text-xl font-bold mb-2">Beautiful Artistry</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        Thoughtfully curated gift items and floral decor designed to leave a lasting impression.
                     </p>
-
                 </div>
 
-                <div class="mission-card bg-pink-50 p-8 rounded-2xl">
-
+                <div class="mission-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
                     <div class="text-4xl mb-4">🎁</div>
-
-                    <h3 class="heading-font text-2xl text-gray-800 mb-3">
-                        Love in Every Box
-                    </h3>
-
-                    <p class="text-gray-600 leading-7">
-                        Every package is made to bring a little happiness.
+                    <h3 class="text-xl font-bold mb-2">Love in Every Detail</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        Every single ribbon, card, and flower is hand-finished with meticulous attention to detail.
                     </p>
-
                 </div>
 
-                <div class="mission-card bg-pink-50 p-8 rounded-2xl">
-
+                <div class="mission-card bg-white dark:bg-slate-800 p-8 rounded-2xl shadow-md border border-gray-100 dark:border-slate-700">
                     <div class="text-4xl mb-4">💗</div>
-
-                    <h3 class="heading-font text-2xl text-gray-800 mb-3">
-                        Happy Moments
-                    </h3>
-
-                    <p class="text-gray-600 leading-7">
-                        Helping you make beautiful memories with loved ones.
+                    <h3 class="text-xl font-bold mb-2">Direct WhatsApp Service</h3>
+                    <p class="text-gray-600 dark:text-gray-300 text-sm leading-relaxed">
+                        Talk directly to our designers to customize gifts to your budget, themes, and personal notes.
                     </p>
-
                 </div>
-
             </div>
-
         </div>
-
     </section>
 
     <!-- Closing Section -->
-
     <section class="py-20 px-6 text-center">
-
-        <h2 class="closing-heading heading-font text-4xl md:text-5xl text-gray-800 mb-5">
+        <h2 class="closing-heading text-3xl md:text-5xl font-extrabold mb-4">
             Make Someone Smile Today!
         </h2>
-
-        <p class="closing-description text-gray-600 mb-8">
-            Because the best gifts come from the heart.
+        <p class="closing-description text-gray-600 dark:text-gray-400 mb-8 max-w-lg mx-auto">
+            Because the most meaningful gifts are the ones sent from the heart.
         </p>
-
-        <a href="product.html"
-            class="bg-pink-600 text-white px-9 py-3 rounded-full hover:bg-pink-700 transition">
-            Find Your Perfect Gift
-        </a>
-
+        <div class="flex flex-wrap justify-center gap-4">
+            <a href="product.html"
+                class="bg-pink-600 text-white font-semibold px-9 py-3.5 rounded-xl shadow-md hover:bg-pink-700 transition">
+                Find Your Perfect Gift
+            </a>
+            <a href="https://wa.me/923227079455" target="_blank"
+                class="border-2 border-pink-600 text-pink-600 font-semibold px-9 py-3.5 rounded-xl hover:bg-pink-50 dark:hover:bg-pink-900/20 transition">
+                Talk on WhatsApp
+            </a>
+        </div>
     </section>
 
-    <!-- Cart Background Overlay -->
+    <!-- Cart Overlay -->
+    <div id="cartOverlay" onclick="closeCart()" class="fixed inset-0 z-40 hidden bg-black/50 backdrop-blur-xs"></div>
 
-    <div id="cartOverlay"
-        onclick="closeCart()"
-        class="fixed inset-0 z-40 hidden bg-black/50">
-    </div>
-
-    <!-- Shopping Cart -->
-
+    <!-- Shopping Cart Drawer -->
     <aside id="shoppingCart"
-        class="cart-panel fixed right-0 top-0 z-50 flex h-full w-full max-w-md translate-x-full flex-col bg-white shadow-2xl transition-transform duration-500">
-
-        <!-- Cart Header -->
-
-        <div class="flex items-center justify-between border-b p-5">
-
+        class="fixed right-0 top-0 z-50 flex h-full w-full max-w-md translate-x-full flex-col bg-white shadow-2xl transition-transform duration-500">
+        <div class="flex items-center justify-between border-b p-5 dark:border-slate-700">
             <h2 class="text-xl font-bold text-gray-800">
                 Your Shopping Cart
             </h2>
-
-            <button onclick="closeCart()"
-                class="text-3xl text-gray-600 hover:text-red-500">
+            <button onclick="closeCart()" class="text-3xl text-gray-400 hover:text-red-500 transition leading-none">
                 &times;
             </button>
-
         </div>
 
-        <!-- Cart Items -->
+        <div id="cartItems" class="flex-1 overflow-y-auto p-5"></div>
 
-        <div id="cartItems" class="flex-1 overflow-y-auto p-5">
-        </div>
-
-        <!-- Cart Footer -->
-
-        <div class="border-t p-5">
-
+        <div class="border-t p-5 dark:border-slate-700">
             <div class="mb-4 flex justify-between text-lg font-bold">
-
-                <span>Total:</span>
-
-                <span id="cartTotal">PKR 0</span>
-
+                <span class="text-gray-700 dark:text-gray-200">Total:</span>
+                <span id="cartTotal" class="text-pink-600">PKR 0</span>
             </div>
 
             <div class="flex flex-col gap-3 mt-4">
-
-                <button onclick="window.open('https://wa.me/923227079455', '_blank')"
-                    class="checkout-button w-full bg-pink-600 hover:bg-pink-700 text-white py-3 rounded-lg font-semibold transition">
-                    Proceed to Checkout
+                <button onclick="checkoutCart()"
+                    class="w-full bg-pink-600 hover:bg-pink-700 text-white py-3.5 rounded-xl font-bold shadow-md transition">
+                    Proceed to Checkout (WhatsApp)
                 </button>
-
                 <button onclick="window.open('https://wa.me/923227079455', '_blank')"
-                    class="contact-button w-full border-2 border-green-600 text-green-600 hover:bg-green-600 hover:text-white py-3 rounded-lg font-semibold transition">
-                    Contact Us
+                    class="w-full border-2 border-green-600 text-green-600 hover:bg-green-50 dark:hover:bg-green-900/20 py-3 rounded-xl font-bold transition">
+                    Chat on WhatsApp
                 </button>
-
             </div>
-
         </div>
-
     </aside>
 
     <!-- Footer -->
-
-    <footer class="w-full h-20 relative flex items-center justify-center">
-
-        <p class="text-white">
-            &copy; Gift Bloom All rights reserved
-        </p>
-
+    <footer class="border-t border-gray-200 bg-white/40 py-10 text-center dark:border-white/10 dark:bg-slate-900/60">
+        <div class="mx-auto max-w-7xl px-5 flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
+            <div class="flex items-center gap-2">
+                <img src="Gift bloom-favicon.jpg" class="h-8 w-8 rounded-full" alt="Gift Bloom Logo">
+                <span class="font-bold text-gray-800 dark:text-white">Gift Bloom</span>
+            </div>
+            <p class="text-sm font-medium">
+                © Gift Bloom. All rights reserved. Handcrafted with love in Pakistan.
+            </p>
+            <div class="flex gap-4 text-sm font-medium">
+                <a href="index.html" class="hover:text-pink-600 transition">Home</a>
+                <a href="product.html" class="hover:text-pink-600 transition">Products</a>
+                <a href="reviews.html" class="hover:text-pink-600 transition">Reviews</a>
+                <a href="https://wa.me/923227079455" target="_blank" class="hover:text-pink-600 transition">WhatsApp</a>
+            </div>
+        </div>
     </footer>
 
     <!-- Shared Cart JavaScript -->
-
     <script src="cart.js"></script>
 
     <!-- Theme JavaScript -->
-
     <script>
-
-        var themeToggle = document.querySelector("#themeToggle");
-
-        // Load Saved Theme
+        var themeSwitch = document.getElementById("tgl-02-sw");
 
         if (localStorage.getItem("giftBloomTheme") === "dark") {
-
             document.body.classList.add("dark-mode");
-
-            themeToggle.checked = true;
-
+            if (themeSwitch) themeSwitch.checked = true;
         }
 
-        // Change Theme
-
-        themeToggle.addEventListener("change", function() {
-
-            if (themeToggle.checked) {
-
-                document.body.classList.add("dark-mode");
-
-                localStorage.setItem("giftBloomTheme", "dark");
-
-            } else {
-
-                document.body.classList.remove("dark-mode");
-
-                localStorage.setItem("giftBloomTheme", "light");
-
-            }
-
-        });
-
+        if (themeSwitch) {
+            themeSwitch.addEventListener("change", function () {
+                if (themeSwitch.checked) {
+                    document.body.classList.add("dark-mode");
+                    localStorage.setItem("giftBloomTheme", "dark");
+                } else {
+                    document.body.classList.remove("dark-mode");
+                    localStorage.setItem("giftBloomTheme", "light");
+                }
+            });
+        }
     </script>
 
 </body>
